@@ -1,0 +1,99 @@
+<form [formGroup]="formulaireProduit" (ngSubmit)="envoyer()" 
+      class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+  <!-- Nom -->
+  <div>
+    <label class="block text-gray-700 font-semibold mb-1" for="nom">Nom</label>
+    <input id="nom" formControlName="nom" type="text" 
+           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <div *ngIf="formulaireProduit.get('nom')?.invalid && formulaireProduit.get('nom')?.touched" 
+         class="text-red-500 text-sm mt-1">
+      Le nom est obligatoire.
+    </div>
+  </div>
+
+  <!-- Code -->
+  <div>
+    <label class="block text-gray-700 font-semibold mb-1" for="code">Code</label>
+    <input id="code" formControlName="code" type="text" 
+           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <div *ngIf="formulaireProduit.get('code')?.invalid && formulaireProduit.get('code')?.touched" 
+         class="text-red-500 text-sm mt-1">
+      Le code est obligatoire.
+    </div>
+  </div>
+
+  <!-- Quantité -->
+  <div>
+    <label class="block text-gray-700 font-semibold mb-1" for="quantite">Quantité</label>
+    <input id="quantite" formControlName="quantite" type="number" min="0" 
+           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+           (input)="formulaireProduit.get('quantite')?.updateValueAndValidity()" />
+    <div *ngIf="formulaireProduit.get('quantite')?.invalid && formulaireProduit.get('quantite')?.touched" 
+         class="text-red-500 text-sm mt-1">
+      La quantité doit être un nombre positif.
+    </div>
+  </div>
+
+  <!-- Statut Calculé -->
+  <div class="sm:col-span-2">
+    <div class="flex items-center p-3 rounded-lg mt-2" [ngClass]="currentStatut.class">
+      <i class="text-lg mr-2" [ngClass]="currentStatut.icon"></i>
+      <span class="font-semibold">Statut :</span>
+      <span class="ml-1">{{ currentStatut.text }}</span>
+    </div>
+  </div>
+
+  <!-- Prix -->
+  <div>
+    <label class="block text-gray-700 font-semibold mb-1" for="prix">Prix (€)</label>
+    <input id="prix" formControlName="prix" type="number" min="0" step="0.01" 
+           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <div *ngIf="formulaireProduit.get('prix')?.invalid && formulaireProduit.get('prix')?.touched" 
+         class="text-red-500 text-sm mt-1">
+      Le prix doit être un nombre positif.
+    </div>
+  </div>
+
+  <!-- Date expiration -->
+ <div>
+    <label class="block text-gray-700 font-semibold mb-1" for="date_expiration">Date d'expiration</label>
+    <input id="date_expiration" formControlName="date_expiration" type="date" 
+           class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <div *ngIf="formulaireProduit.get('date_expiration')?.invalid && formulaireProduit.get('date_expiration')?.touched" 
+         class="text-red-500 text-sm mt-1">
+      La date d'expiration est obligatoire.
+    </div>
+      <!-- Affichage formaté -->
+  <div *ngIf="formulaireProduit.get('date_expiration')?.value" class="mt-2 text-sm text-gray-600">
+      <i class="ri-calendar-check-line text-blue-500 mr-1"></i>
+      Sélectionné : {{ formulaireProduit.get('date_expiration')?.value | date:'fullDate':'':'fr' }}
+    </div>
+  </div>
+
+  <!-- Boutons -->
+  <div class="sm:col-span-2 flex justify-between items-center">
+    <button type="button" (click)="fermer.emit()"
+            class="text-gray-600 hover:text-gray-800">
+      <i class="ri-arrow-left-line mr-1"></i> Retour
+    </button>
+
+    <div class="text-right">
+      <button type="submit" [disabled]="formulaireProduit.invalid || envoiEnCours"
+              class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 transition">
+        <i class="ri-add-line mr-1"></i>
+        {{ envoiEnCours ? 'Enregistrement...' : 'Ajouter le produit' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="sm:col-span-2">
+    <p *ngIf="messageSucces" class="mt-4 p-3 bg-green-50 text-green-700 rounded-lg">
+      <i class="ri-checkbox-circle-line mr-2"></i>{{ messageSucces }}
+    </p>
+    <p *ngIf="messageErreur" class="mt-4 p-3 bg-red-50 text-red-700 rounded-lg">
+      <i class="ri-error-warning-line mr-2"></i>{{ messageErreur }}
+    </p>
+  </div>
+</form>

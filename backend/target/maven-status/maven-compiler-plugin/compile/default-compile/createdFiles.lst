@@ -1,0 +1,5 @@
+com\pharmasys\service\ProduitService.class
+com\pharmasys\model\Produit.class
+com\pharmasys\repository\ProduitRepository.class
+com\pharmasys\controller\ProduitController.class
+com\pharmasys\PharmaSysApplication.class
