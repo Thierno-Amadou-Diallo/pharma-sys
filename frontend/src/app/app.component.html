@@ -1,11 +1,31 @@
 <div class="flex h-screen bg-gray-100">
   <!-- Sidebar -->
   <aside class="w-64 bg-white shadow-lg z-10 flex flex-col rounded-tr-2xl rounded-br-2xl overflow-hidden">
-  <!-- Logo / Titre -->
-  <div class="p-4 border-b flex items-center h-16 bg-blue-50">
-    <i class="ri-capsule-line text-2xl text-blue-600"></i>
-    <span class="ml-2 text-xl font-bold text-blue-800">PharmaSys</span>
-  </div>
+<!-- Nouveau logo / titre -->
+    <div class="logo-container">
+        <!-- SVG Custom - Capsule Médicale -->
+        <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 4L8 16V48L32 60L56 48V16L32 4Z" fill="url(#capsuleGradient)"/>
+            <path d="M24 12V52M40 12V52" stroke="white" stroke-width="6" stroke-linecap="round"/>
+            <path d="M32 4L8 16V48L32 60L56 48V16L32 4Z" stroke="url(#borderGradient)" stroke-width="1.5"/>
+            <defs>
+                <linearGradient id="capsuleGradient" x1="32" y1="4" x2="32" y2="60" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#3B82F6"/>
+                    <stop offset="1" stop-color="#6366F1"/>
+                </linearGradient>
+                <linearGradient id="borderGradient" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FFFFFF" stop-opacity="0.8"/>
+                    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.2"/>
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <!-- Texte du logo -->
+        <div class="logo-text-container">
+            <span class="logo-main-text">PharmaSys</span>
+            <span class="logo-sub-text">PHARMA MANAGEMENT</span>
+        </div>
+    </div>
 
   <!-- Menu -->
   <!-- Menu -->

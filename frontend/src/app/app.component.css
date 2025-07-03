@@ -11,3 +11,76 @@ th, td {
   padding: 8px;
   text-align: left;
 }
+
+/* Styles généraux */
+.logo-container {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(219, 234, 254, 0.5);
+    background: linear-gradient(to right, rgba(239, 246, 255, 0.9), rgba(238, 242, 255, 0.9));
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Icône SVG */
+.logo-icon {
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+/* Conteneur texte */
+.logo-text-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+/* Texte principal */
+.logo-main-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.025em;
+}
+
+/* Sous-texte */
+.logo-sub-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(99, 102, 241, 0.8);
+    font-weight: 500;
+    margin-top: -2px;
+    text-transform: uppercase;
+}
+
+/* Animation au survol */
+.logo-container:hover .logo-icon {
+    transform: rotate(-5deg) scale(1.05);
+    transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Version Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .logo-container {
+        background: linear-gradient(to right, rgba(30, 58, 138, 0.9), rgba(49, 46, 129, 0.9)) !important;
+        border-color: rgba(30, 64, 175, 0.2) !important;
+    }
+    
+    .logo-main-text {
+        background: linear-gradient(to right, #93c5fd, #a5b4fc) !important;
+    }
+    
+    .logo-sub-text {
+        color: rgba(165, 180, 252, 0.8) !important;
+    }
+    
+    .logo-icon path:first-child {
+        fill: url(#darkCapsuleGradient);
+    }
+}
