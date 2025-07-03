@@ -1,0 +1,66 @@
+<div class="bg-white rounded-xl shadow-md p-6 border border-gray-200 font-sans">
+  <!-- Titre -->
+  <h2 class="text-xl font-semibold text-blue-700 border-l-4 border-blue-300 pl-3 mb-4">
+    Gestion des Stocks
+  </h2>
+
+  <!-- État de chargement -->
+  <div *ngIf="chargement" class="text-gray-500">Chargement des stocks...</div>
+
+  <!-- Aucune donnée -->
+  <div *ngIf="!chargement && stocks.length === 0" class="text-gray-500">
+    Aucun stock trouvé.
+  </div>
+
+  <!-- Tableau -->
+  <div *ngIf="!chargement && stocks.length > 0" class="overflow-x-auto rounded-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200 text-base tracking-wide text-gray-700">
+      <thead class="bg-blue-100 text-blue-700 uppercase text-sm font-semibold">
+        <tr>
+          <th class="py-3 px-5 text-left border-r border-gray-300">Médicament</th>
+          <th class="py-3 px-5 text-left border-r border-gray-300">Quantité</th>
+          <th class="py-3 px-5 text-left border-r border-gray-300">Seuil d'alerte</th>
+          <th class="py-3 px-5 text-left border-r border-gray-300">Dernière mise à jour</th>
+          <th class="py-3 px-5 text-left">Statut</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let stock of stocks" class="hover:bg-blue-50 transition cursor-pointer">
+          <td class="py-3 px-5 border-r border-gray-100 font-medium hover:text-blue-600 transition">
+            {{ stock.produit?.nom || 'Produit inconnu' }}
+          </td>
+          <td class="py-3 px-5 border-r border-gray-100 text-center font-semibold">
+            {{ stock.quantite }}
+          </td>
+          <td class="py-3 px-5 border-r border-gray-100 text-center">
+            {{ stock.seuilAlerte }}
+          </td>
+          <td class="py-3 px-5 border-r border-gray-100 text-center italic text-gray-500">
+            {{ stock.dateMiseAJour | date: 'dd/MM/yyyy' }}
+          </td>
+          <td class="py-3 px-5 text-center">
+            <span
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium"
+              [ngClass]="{
+                'bg-green-100 text-green-700': stock.statut === 'NORMAL',
+                'bg-amber-100 text-amber-800': stock.statut === 'ALERTE',
+                'bg-red-100 text-red-700': stock.statut === 'RUPTURE'
+              }"
+            >
+              <i
+                [ngClass]="{
+                  'ri-check-line text-green-600': stock.statut === 'NORMAL',
+                  'ri-alert-line text-amber-600': stock.statut === 'ALERTE',
+                  'ri-error-warning-line text-red-600': stock.statut === 'RUPTURE'
+                }"
+              ></i>
+              <span class="whitespace-nowrap">
+                {{ stock.statut }}
+              </span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

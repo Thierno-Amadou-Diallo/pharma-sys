@@ -3,3 +3,7 @@ C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\ph
 C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\repository\ProduitRepository.java
 C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\model\Produit.java
 C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\PharmaSysApplication.java
+C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\repository\StockRepository.java
+C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\service\StockService.java
+C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\controller\StockController.java
+C:\Users\tadiallo\Downloads\pharma-sys-backend_full\backend\src\main\java\com\pharmasys\model\Stock.java

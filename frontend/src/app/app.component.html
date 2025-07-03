@@ -1,20 +1,58 @@
 <div class="flex h-screen bg-gray-100">
   <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-md z-10 flex flex-col">
-    <div class="p-4 border-b flex items-center h-14">
-      <i class="ri-capsule-line text-2xl text-blue-600"></i>
-      <span class="ml-2 text-xl font-bold text-gray-800">PharmaSys</span>
-    </div>
-    <nav class="mt-4 flex-1">
-  <a routerLink="/" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-     class="flex items-center px-4 py-3 hover:bg-blue-50 text-gray-700">
-    <i class="ri-dashboard-line text-lg mr-2"></i> Tableau de bord
-  </a>
-  <a routerLink="/produits" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-     class="flex items-center px-4 py-3 hover:bg-blue-50 text-gray-700">
-    <i class="ri-medicine-bottle-line text-lg mr-2"></i> Médicaments
-  </a>
-</nav>
+  <aside class="w-64 bg-white shadow-lg z-10 flex flex-col rounded-tr-2xl rounded-br-2xl overflow-hidden">
+  <!-- Logo / Titre -->
+  <div class="p-4 border-b flex items-center h-16 bg-blue-50">
+    <i class="ri-capsule-line text-2xl text-blue-600"></i>
+    <span class="ml-2 text-xl font-bold text-blue-800">PharmaSys</span>
+  </div>
+
+  <!-- Menu -->
+  <!-- Menu -->
+    <nav class="flex flex-col">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        (click)="activeMenu = 'dashboard'"
+        [class.bg-blue-100]="activeMenu === 'dashboard'"
+        [class.text-blue-700]="activeMenu === 'dashboard'"
+        class="flex items-center gap-3 px-5 py-4 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 ease-in-out font-medium"
+      >
+        <i class="ri-dashboard-line text-lg"
+           [class.text-blue-600]="activeMenu === 'dashboard'"
+           [class.text-gray-600]="activeMenu !== 'dashboard'"></i>
+        <span>Tableau de bord</span>
+      </a>
+
+    <a
+        routerLink="/produits"
+        routerLinkActive="active"
+        (click)="activeMenu = 'medicaments'"
+        [class.bg-blue-100]="activeMenu === 'medicaments'"
+        [class.text-blue-700]="activeMenu === 'medicaments'"
+        class="flex items-center gap-3 px-5 py-4 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 ease-in-out font-medium"
+      >
+        <i class="ri-medicine-bottle-line text-lg"
+           [class.text-blue-600]="activeMenu === 'medicaments'"
+           [class.text-gray-600]="activeMenu !== 'medicaments'"></i>
+        <span>Médicaments</span>
+      </a>
+             <a
+  routerLink="/stocks"
+  routerLinkActive="active"
+  (click)="activeMenu = 'stocks'"
+  [class.bg-blue-100]="activeMenu === 'stocks'"
+  [class.text-blue-700]="activeMenu === 'stocks'"
+  class="flex items-center gap-3 px-5 py-4 text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 ease-in-out font-medium"
+>
+  <i
+    class="ri-stack-line text-lg"
+    [class.text-blue-600]="activeMenu === 'stocks'"
+    [class.text-gray-600]="activeMenu !== 'stocks'"
+  ></i>
+  <span>Stocks</span>
+</a>
+    </nav>
   </aside>
 
   <!-- Right side (topbar + main content) -->
@@ -33,10 +71,11 @@
         </div>
       </div>
 
-      <!-- Date à droite -->
-      <div class="text-gray-600 text-sm font-medium">
-        <span id="currentDate"></span>
-      </div>
+      <!-- Date à droite - Utilisation de l'interpolation Angular -->
+     <div class="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-md text-sm font-medium shadow-sm">
+  <i class="ri-calendar-line mr-2"></i>
+  {{ currentDate }}
+</div>
     </div>
 
     <!-- Contenu principal -->

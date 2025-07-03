@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Produit, ProduitService } from '../produits/produit.service';
 
@@ -15,6 +15,9 @@ export class ProduitsComponent implements OnInit {
 
   // 🔥 Boîte de dialogue de suppression
   produitASupprimer: Produit | null = null;
+
+  // 🔽 Référence au formulaire pour scroll
+  @ViewChild('formulaireProduitRef') formulaireProduitElement!: ElementRef;
 
   constructor(
     private produitService: ProduitService,
@@ -80,6 +83,11 @@ export class ProduitsComponent implements OnInit {
       date_expiration: produit.date_expiration.split('T')[0] // Format pour input date
     });
     this.afficherFormulaire = true;
+
+    // 🔽 Scroll vers le formulaire après affichage
+    setTimeout(() => {
+      this.formulaireProduitElement?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }
 
   onSubmit() {
