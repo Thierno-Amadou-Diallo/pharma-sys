@@ -1,9 +1,82 @@
 <div class="p-6">
-  <div class="bg-white rounded-xl shadow-lg p-6">
-    <!-- Titre -->
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Tableau de bord</h2>
+  <!-- Bloc principal -->
+  <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
 
-    <!-- Graphique -->
-    <div id="salesChart" style="height: 400px;" class="rounded-lg border border-gray-200 shadow-inner"></div>
+    <!-- Titre -->
+<div class="mb-6">
+  <h2 class="text-xl font-semibold text-blue-600 flex items-center gap-2">
+    <span class="w-1 h-6 bg-blue-300 rounded-sm inline-block"></span>
+    Tableau de bord
+  </h2>
+</div>
+
+    <!-- Cartes de statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white p-5 rounded-xl border-l-4 border-blue-500 shadow">
+        <h3 class="text-sm text-gray-500">Total Produits</h3>
+        <p class="text-2xl font-bold text-blue-700">{{ produits.length }}</p>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl border-l-4 border-green-500 shadow">
+        <h3 class="text-sm text-gray-500">Quantité Totale</h3>
+        <p class="text-2xl font-bold text-green-700">{{ totalQuantite }}</p>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl border-l-4 border-yellow-500 shadow">
+        <h3 class="text-sm text-gray-500">Produits en Rupture</h3>
+        <p class="text-2xl font-bold text-yellow-600">{{ produitsRupture.length }}</p>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl border-l-4 border-red-500 shadow">
+        <h3 class="text-sm text-gray-500">Produits Indisponibles</h3>
+        <p class="text-2xl font-bold text-red-600">{{ produitsIndisponibles.length }}</p>
+      </div>
+    </div>
+
+  <!-- Graphique produits -->
+<div class="flex flex-wrap gap-6">
+  <!-- Carte du graphique -->
+  <div class="bg-white p-6 rounded-xl shadow-md w-full md:w-1/2 lg:w-1/3">
+    <h3 class="text-lg font-semibold text-blue-600/90 text-center mb-6">Répartition des produits</h3>
+
+    <div class="relative h-60 w-60 mx-auto mb-6">
+      <canvas
+        *ngIf="chartData.length"
+        baseChart
+        [data]="{
+          labels: chartLabels,
+          datasets: [{
+            data: chartData,
+            backgroundColor: chartColors
+          }]
+        }"
+        [type]="'doughnut'"
+        [options]="{
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: false }
+          }
+        }"
+      ></canvas>
+    </div>
+
+    <!-- Légende en ligne -->
+    <div class="flex justify-center gap-6 flex-wrap text-sm">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-2 rounded-full bg-green-500"></div>
+        <span class="text-gray-500/90 font-medium">En stock</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-2 rounded-full bg-yellow-400"></div>
+        <span class="text-gray-500/90 font-medium">Rupture</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-2 rounded-full bg-red-500"></div>
+        <span class="text-gray-500/90 font-medium">Indisponible</span>
+      </div>
+    </div>
   </div>
+</div>
+
 </div>

@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AjouterProduitComponent } from './ajouter_produit/ajouter-produit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
 import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr);
 
@@ -25,7 +26,8 @@ registerLocaleData(localeFr);
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+   NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
