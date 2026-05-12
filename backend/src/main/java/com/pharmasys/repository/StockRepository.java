@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface StockRepository extends MongoRepository<Stock, String> {
     
-    @Query("{ 'produit.$id': ?0 }")
     Stock findByProduitId(String produitId);
     
     @Query("{ $expr: { $lte: ['$quantite', '$seuilAlerte'] } }")

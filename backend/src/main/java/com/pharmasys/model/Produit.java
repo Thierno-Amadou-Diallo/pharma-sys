@@ -15,15 +15,19 @@ public class Produit {
     private String date_expiration;
     private String statut;
 
+    // pour le stock
+    private int seuilAlerte;
+
     public Produit() {}
 
-    public Produit(String nom, String code, int quantite, double prix, String date_expiration, String statut) {
+    public Produit(String nom, String code, int quantite, double prix, String date_expiration, String statut, int seuilAlerte) {
         this.nom = nom;
         this.code = code;
         this.quantite = quantite;
         this.prix = prix;
         this.date_expiration = date_expiration;
         this.statut = statut;
+        this.seuilAlerte = seuilAlerte;
     }
 
     // Getters et setters
@@ -47,4 +51,12 @@ public class Produit {
 
     public String getStatut() { return statut; }
     public void setStatut(String statut) { this.statut = statut; }
+
+    public int getSeuilAlerte() {
+        return seuilAlerte;
+    }
+
+    public void setSeuilAlerte(int seuilAlerte) {
+        this.seuilAlerte = seuilAlerte;
+    }
 }
