@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
 
   produitsIndisponibles: Produit[] = [];
 
+  pourcentageAlerte = 0;
+
   // Produits en alerte
   alertStocks: Produit[] = [];
 
@@ -33,11 +35,30 @@ export class DashboardComponent implements OnInit {
   chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: '70%',
+    cutout: '58%',
+
+    animation: {
+      animateRotate: true,
+      animateScale: true
+    },
+
     plugins: {
       legend: {
         display: false
+      },
+
+      tooltip: {
+        backgroundColor: '#111827',
+        padding: 12,
+        titleColor: '#fff',
+        bodyColor: '#fff',
+        borderColor: '#e5e7eb',
+        borderWidth: 1
       }
+    },
+
+    hover: {
+      mode: 'nearest'
     }
   };
 
@@ -88,10 +109,21 @@ export class DashboardComponent implements OnInit {
           {
             data: [enStock, alerte, rupture],
             backgroundColor: ['#22c55e', '#facc15', '#ef4444'],
-            borderWidth: 0
-          }
+            borderColor: '#ffffff',
+            borderWidth: 6,
+            hoverOffset: 12,
+            hoverBorderWidth: 0,
+            hoverBorderColor: '#fff'
+          } as any
         ]
       };
+      // Pourcentage des alertes
+      const total = enStock + alerte + rupture;
+
+      this.pourcentageAlerte =
+          total > 0
+              ? Math.round((alerte / total) * 100)
+              : 0;
     });
   }
 }
