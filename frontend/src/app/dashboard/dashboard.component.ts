@@ -91,16 +91,20 @@ export class DashboardComponent implements OnInit {
           p => p.quantite > 0 && p.quantite <= 5
       );
 
-      // En stock
+      // Produits normaux
       const enStock = this.produits.filter(
-          p => p.statut === 'En stock'
+          p => p.quantite > 5
       ).length;
 
-      // Alertes
-      const alerte = this.alertStocks.length;
+// Produits en alerte
+      const alerte = this.produits.filter(
+          p => p.quantite > 0 && p.quantite <= 5
+      ).length;
 
-      // Rupture
-      const rupture = this.produitsRupture.length;
+// Produits en rupture
+      const rupture = this.produits.filter(
+          p => p.quantite <= 0
+      ).length;
 
       // Mise à jour du graphique
       this.chartData = {
