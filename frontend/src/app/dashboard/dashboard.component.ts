@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   // Produits en alerte
   alertStocks: Produit[] = [];
 
+  produitsExpirationProche: Produit[] = [];
+
   chartData = {
     labels: ['En stock', 'Alerte', 'Rupture'],
     datasets: [
@@ -90,6 +92,24 @@ export class DashboardComponent implements OnInit {
       this.alertStocks = this.produits.filter(
           p => p.quantite > 0 && p.quantite <= 5
       );
+
+      // Produits proches expiration (< 30 jours)
+      const aujourdHui = new Date();
+
+      this.produitsExpirationProche = this.produits.filter(p => {
+
+        if (!p.date_expiration) {
+          return false;
+        }
+
+        const dateExp = new Date(p.date_expiration);
+
+        const diffTime = dateExp.getTime() - aujourdHui.getTime();
+
+        const diffDays = diffTime / (1000 * 3600 * 24);
+
+        return diffDays > 0 && diffDays <= 30;
+      });
 
       // Produits normaux
       const enStock = this.produits.filter(

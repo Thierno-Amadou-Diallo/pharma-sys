@@ -9,26 +9,43 @@
         Tableau de bord
       </h2>
     </div>
-    <!-- Cartes statistiques -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+    <!-- Cards statistiques -->
+    <!-- Cards statistiques -->
+    <div
+            class="grid grid-cols-1
+           md:grid-cols-2
+           xl:grid-cols-5
+           gap-6 mb-8"
+    >
 
       <!-- Total Produits -->
-      <div class="bg-white p-5 rounded-2xl border-l-4 border-blue-500 shadow-md hover:shadow-xl transition duration-300 hover:-translate-y-1">
+      <div
+              class="bg-white rounded-2xl shadow-md p-5
+           border-l-4 border-blue-500
+           hover:shadow-lg transition"
+      >
 
         <div class="flex items-center justify-between">
 
           <div>
-            <h3 class="text-sm text-gray-500 font-medium">
-              Total Produits
-            </h3>
 
-            <p class="text-4xl font-bold text-blue-600 mt-2">
-              {{ produits.length }}
+            <p class="text-gray-500 font-medium text-sm">
+              Total Produits
             </p>
+
+            <h2 class="text-4xl font-bold text-blue-600 mt-2">
+              {{ produits.length }}
+            </h2>
+
           </div>
 
-          <div class="bg-blue-100 w-20 h-20 rounded-2xl flex items-center justify-center">
-            <i class="ri-capsule-line text-4xl text-blue-600"></i>
+          <div
+                  class="w-16 h-16 rounded-2xl
+                   bg-blue-100 flex items-center justify-center"
+          >
+
+            <i class="ri-capsule-fill text-3xl text-blue-600"></i>
+
           </div>
 
         </div>
@@ -36,75 +53,143 @@
       </div>
 
       <!-- Quantité Totale -->
-      <div class="bg-white p-5 rounded-2xl border-l-4 border-green-500 shadow-md hover:shadow-xl transition duration-300 hover:-translate-y-1">
+      <div
+              class="bg-white rounded-2xl shadow-md p-5
+           border-l-4 border-green-500
+           hover:shadow-lg transition"
+      >
 
         <div class="flex items-center justify-between">
 
           <div>
-            <h3 class="text-sm text-gray-500 font-medium">
+
+            <p class="text-gray-500 font-medium text-sm">
               Quantité Totale
-            </h3>
+            </p>
 
-            <p class="text-4xl font-bold text-green-600 mt-2">
+            <h2 class="text-4xl font-bold text-green-600 mt-2">
               {{ totalQuantite }}
-            </p>
+            </h2>
+
           </div>
 
-          <div class="bg-green-100 w-20 h-20 rounded-2xl flex items-center justify-center">
-            <i class="ri-stack-line text-4xl text-green-600"></i>
+          <div
+                  class="w-16 h-16 rounded-2xl
+                   bg-green-100 flex items-center justify-center"
+          >
+
+            <i class="ri-stack-fill text-3xl text-green-600"></i>
+
           </div>
 
         </div>
 
       </div>
 
-      <!-- Produits Rupture -->
-      <div class="bg-white p-5 rounded-2xl border-l-4 border-yellow-500 shadow-md hover:shadow-xl transition duration-300 hover:-translate-y-1">
+      <!-- Produits en rupture -->
+      <div
+              class="bg-white rounded-2xl shadow-md p-5
+           border-l-4 border-yellow-500
+           hover:shadow-lg transition"
+      >
 
         <div class="flex items-center justify-between">
 
           <div>
-            <h3 class="text-sm text-gray-500 font-medium">
-              Produits en Rupture
-            </h3>
 
-            <p class="text-4xl font-bold text-yellow-600 mt-2">
+            <p class="text-gray-500 font-medium text-sm">
+              Produits en rupture
+            </p>
+
+            <h2 class="text-4xl font-bold text-yellow-600 mt-2">
               {{ produitsRupture.length }}
-            </p>
+            </h2>
+
           </div>
 
-          <div class="bg-yellow-100 w-20 h-20 rounded-2xl flex items-center justify-center">
-            <i class="ri-error-warning-line text-4xl text-yellow-600"></i>
+          <div
+                  class="w-16 h-16 rounded-2xl
+                   bg-yellow-100 flex items-center justify-center"
+          >
+
+            <i class="ri-error-warning-fill text-3xl text-yellow-600"></i>
+
           </div>
 
         </div>
 
       </div>
 
-      <!-- Produits Indisponibles -->
-      <div class="bg-white p-5 rounded-2xl border-l-4 border-red-500 shadow-md hover:shadow-xl transition duration-300 hover:-translate-y-1">
+      <!-- Produits indisponibles -->
+      <div
+              class="bg-white rounded-2xl shadow-md p-5
+           border-l-4 border-red-500
+           hover:shadow-lg transition"
+      >
 
         <div class="flex items-center justify-between">
 
           <div>
-            <h3 class="text-sm text-gray-500 font-medium">
-              Produits Indisponibles
-            </h3>
 
-            <p class="text-4xl font-bold text-red-600 mt-2">
-              {{ produitsIndisponibles.length }}
+            <p class="text-gray-500 font-medium text-sm">
+              Produits indisponibles
             </p>
+
+            <h2 class="text-4xl font-bold text-red-600 mt-2">
+              {{ produitsIndisponibles.length }}
+            </h2>
+
           </div>
 
-          <div class="bg-red-100 w-20 h-20 rounded-2xl flex items-center justify-center">
-            <i class="ri-close-circle-line text-4xl text-red-600"></i>
+          <div
+                  class="w-16 h-16 rounded-2xl
+                   bg-red-100 flex items-center justify-center"
+          >
+
+            <i class="ri-close-circle-fill text-3xl text-red-600"></i>
+
           </div>
 
         </div>
 
       </div>
 
-    </div>
+      <!-- Expiration proche -->
+      <div
+              class="bg-white rounded-2xl shadow-md p-5
+           border-l-4 border-orange-500
+           hover:shadow-lg transition"
+      >
+
+        <div class="flex items-center justify-between">
+
+          <div>
+
+            <p class="text-gray-500 font-medium text-sm">
+              Expiration proche
+            </p>
+
+            <h2 class="text-4xl font-bold text-orange-500 mt-2">
+              {{ produitsExpirationProche.length }}
+            </h2>
+
+          </div>
+
+          <div
+                  class="w-16 h-16 rounded-2xl
+                   bg-orange-100 flex items-center justify-center"
+          >
+
+            <i class="ri-alarm-warning-fill text-3xl text-orange-500"></i>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>r
+
 
     <!-- Section graphique + alertes -->
     <div class="flex flex-col xl:flex-row gap-6">
