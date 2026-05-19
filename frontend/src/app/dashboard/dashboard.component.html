@@ -10,7 +10,6 @@
       </h2>
     </div>
     <!-- Cards statistiques -->
-    <!-- Cards statistiques -->
     <div
             class="grid grid-cols-1
            md:grid-cols-2
@@ -188,45 +187,46 @@
 
       </div>
 
-    </div>r
+    </div>
 
 
     <!-- Section graphique + alertes -->
     <div class="flex flex-col xl:flex-row gap-6">
 
-      <!-- Carte Graphique -->
-      <div class="bg-white p-6 rounded-2xl shadow-md w-full xl:w-[420px]">
+      <!-- Graphique -->
+      <div class="bg-white p-6 rounded-2xl shadow-md w-full xl:w-[420px] flex flex-col justify-center">
 
         <h3 class="text-xl font-semibold text-blue-600 text-center mb-6">
           Répartition des produits
         </h3>
 
-        <!-- Graphique -->
-        <div class="relative h-72 w-72 mx-auto mb-6">
+        <!-- Chart -->
+        <div class="relative h-72 w-72 mx-auto my-auto">
           <canvas
                   baseChart
                   [data]="chartData"
                   [type]="'doughnut'"
                   [options]="{
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false
-      }
-    }
-  }"
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }"
           >
           </canvas>
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
-  <span class="text-3xl font-bold text-yellow-500">
-    {{ pourcentageAlerte }}%
-  </span>
 
-            <span class="text-sm text-gray-500 font-medium">
-    Alertes
-  </span>
+          <!-- Centre -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+
+        <span class="text-3xl font-bold text-yellow-500">
+          {{ pourcentageAlerte }}%
+        </span>
+
           </div>
+
         </div>
 
         <!-- Légende -->
@@ -235,160 +235,254 @@
           <div class="flex items-center gap-2">
             <div class="w-8 h-2 rounded-full bg-green-500"></div>
             <span class="text-gray-500 font-medium">
-              En stock
-            </span>
+          En stock
+        </span>
           </div>
 
           <div class="flex items-center gap-2">
             <div class="w-8 h-2 rounded-full bg-yellow-400"></div>
             <span class="text-gray-500 font-medium">
-              Alerte
-            </span>
+          Alerte
+        </span>
           </div>
 
           <div class="flex items-center gap-2">
             <div class="w-8 h-2 rounded-full bg-red-500"></div>
             <span class="text-gray-500 font-medium">
-              Rupture
-            </span>
+          Rupture
+        </span>
           </div>
 
         </div>
+
       </div>
 
-      <!-- Carte Alertes -->
-      <div class="bg-white p-6 rounded-2xl shadow-md flex-1">
+      <!-- COLONNE DROITE -->
+      <div class="flex-1 flex flex-col gap-6">
 
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
+        <!-- ALERTES STOCK -->
+        <div class="bg-white p-6 rounded-2xl shadow-md max-h-[380px] flex flex-col">
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-6">
 
-          <h3 class="text-xl font-semibold text-red-600 flex items-center gap-2">
-            <i class="ri-alert-line"></i>
-            Alertes Stock
-          </h3>
+            <h3 class="text-xl font-semibold text-red-600 flex items-center gap-2">
+              <i class="ri-alert-line"></i>
+              Alertes Stock
+            </h3>
 
-          <span class="bg-red-100 text-red-600 text-sm font-semibold px-3 py-1 rounded-full">
-            {{ alertStocks.length }} alertes
-          </span>
+            <span class="bg-red-100 text-red-600 text-sm font-semibold px-3 py-1 rounded-full">
+          {{ alertStocks.length }} alertes
+        </span>
 
-        </div>
+          </div>
 
-        <!-- Aucun problème -->
-        <div
-                *ngIf="alertStocks.length === 0"
-                class="flex flex-col items-center justify-center h-[320px] text-gray-400"
-        >
-
-          <i class="ri-checkbox-circle-line text-6xl text-green-500 mb-4"></i>
-
-          <p class="text-lg font-medium">
-            Aucun problème détecté
-          </p>
-
-        </div>
-
-        <!-- Liste des alertes -->
-        <div class="space-y-4">
-
+          <!-- Aucun problème -->
           <div
-                  *ngFor="let stock of alertStocks"
-                  class="group flex items-center justify-between bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-yellow-200 transition duration-300"
+                  *ngIf="alertStocks.length === 0"
+                  class="flex flex-col items-center justify-center py-10 text-gray-400"
           >
 
-            <!-- Partie gauche -->
-            <div class="flex items-center gap-4">
+            <i class="ri-checkbox-circle-line text-5xl text-green-500 mb-3"></i>
 
-              <!-- Icône -->
-              <div
-                      class="w-16 h-16 rounded-2xl flex items-center justify-center"
-                      [ngClass]="{
-        'bg-red-100': stock.quantite <= 1,
-        'bg-yellow-100': stock.quantite > 1
-      }"
-              >
+            <p class="font-medium">
+              Aucun problème détecté
+            </p>
 
-                <i
-                        class="text-3xl"
+          </div>
+
+          <!-- Liste -->
+          <div class="space-y-4 overflow-y-auto pr-2 flex-1">
+            <div
+                    *ngFor="let stock of alertStocks"
+                    class="flex items-center justify-between
+                 border border-yellow-100
+                 rounded-2xl p-4
+                 hover:bg-yellow-50 transition"
+            >
+
+              <!-- Gauche -->
+              <div class="flex items-center gap-4">
+
+                <!-- Icone -->
+                <div
+                        class="w-14 h-14 rounded-2xl
+                     flex items-center justify-center"
                         [ngClass]="{
-          'ri-alarm-warning-line text-red-600': stock.quantite <= 1,
-          'ri-alert-line text-yellow-600': stock.quantite > 1
-        }"
-                ></i>
+                'bg-red-100': stock.quantite <= 1,
+                'bg-yellow-100': stock.quantite > 1
+              }"
+                >
+
+                  <i
+                          class="text-2xl"
+                          [ngClass]="{
+                  'ri-alarm-warning-line text-red-600': stock.quantite <= 1,
+                  'ri-alert-line text-yellow-600': stock.quantite > 1
+                }"
+                  ></i>
+
+                </div>
+
+                <!-- Infos -->
+                <div>
+
+                  <h4 class="font-semibold text-gray-800 text-base">
+                    {{ stock.nom }}
+                  </h4>
+
+                  <p class="text-sm text-gray-500 mt-1">
+
+                    Quantité restante :
+
+                    <span
+                            class="font-bold"
+                            [ngClass]="{
+                    'text-red-600': stock.quantite <= 1,
+                    'text-yellow-600': stock.quantite > 1
+                  }"
+                    >
+                  {{ stock.quantite }}
+                </span>
+
+                  </p>
+
+                  <!-- Barre -->
+                  <div class="w-52 h-2 bg-gray-200 rounded-full mt-3 overflow-hidden">
+
+                    <div
+                            class="h-full rounded-full"
+                            [style.width.%]="stock.quantite * 20"
+                            [ngClass]="{
+                    'bg-red-500': stock.quantite <= 1,
+                    'bg-yellow-500': stock.quantite > 1
+                  }"
+                    ></div>
+
+                  </div>
+
+                </div>
 
               </div>
 
-              <!-- Infos -->
+              <!-- Badge -->
               <div>
 
-                <h4 class="text-xl font-bold text-gray-800 capitalize">
-                  {{ stock.nom }}
-                </h4>
+            <span
+                    class="px-4 py-2 rounded-xl text-sm font-semibold"
+                    [ngClass]="{
+                'bg-red-100 text-red-600': stock.quantite <= 1,
+                'bg-yellow-100 text-yellow-700': stock.quantite > 1
+              }"
+            >
 
-                <div class="flex items-center gap-2 mt-1">
+              {{ stock.quantite <= 1 ? 'CRITIQUE' : 'ALERTE' }}
 
-        <span class="text-gray-500">
-          Quantité restante :
-        </span>
-
-                  <span
-                          class="font-bold text-lg"
-                          [ngClass]="{
-            'text-red-600': stock.quantite <= 1,
-            'text-yellow-600': stock.quantite > 1
-          }"
-                  >
-          {{ stock.quantite }}
-        </span>
-
-                </div>
-
-                <!-- Barre de progression -->
-                <div class="w-64 h-2 bg-gray-200 rounded-full overflow-hidden mt-3">
-
-                  <div
-                          class="h-full rounded-full transition-all duration-500"
-                          [style.width.%]="stock.quantite * 20"
-                          [ngClass]="{
-      'bg-red-500': stock.quantite <= 1,
-      'bg-yellow-500': stock.quantite > 1
-    }"
-                  ></div>
-
-                </div>
+            </span>
 
               </div>
-
-            </div>
-
-            <!-- Badge -->
-            <div>
-
-    <span
-            class="px-5 py-2 rounded-full text-sm font-bold flex items-center gap-2"
-            [ngClass]="{
-        'bg-red-100 text-red-700': stock.quantite <= 1,
-        'bg-yellow-100 text-yellow-700': stock.quantite > 1
-      }"
-    >
-
-      <i
-              [ngClass]="{
-          'ri-close-circle-line': stock.quantite <= 1,
-          'ri-error-warning-line': stock.quantite > 1
-        }"
-      ></i>
-
-      {{ stock.quantite <= 1 ? 'CRITIQUE' : 'ALERTE' }}
-
-    </span>
 
             </div>
 
           </div>
 
         </div>
+
+        <!-- EXPIRATION -->
+        <div class="bg-white p-6 rounded-2xl shadow-md max-h-[380px] flex flex-col">
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-6">
+
+            <div>
+
+              <h3 class="text-xl font-semibold text-orange-500 flex items-center gap-2">
+                <i class="ri-alarm-warning-line"></i>
+                Expiration proche
+              </h3>
+
+              <p class="text-sm text-gray-400 mt-1">
+                Médicaments expirant dans moins de 30 jours
+              </p>
+
+            </div>
+
+            <span class="bg-orange-100 text-orange-600 text-sm font-semibold px-3 py-1 rounded-full">
+          {{ produitsExpirationProche.length }} produits
+        </span>
+
+          </div>
+
+          <!-- Aucun -->
+          <div
+                  *ngIf="produitsExpirationProche.length === 0"
+                  class="flex flex-col items-center justify-center py-10 text-gray-400"
+          >
+
+            <i class="ri-checkbox-circle-line text-5xl text-green-500 mb-3"></i>
+
+            <p class="font-medium">
+              Aucun produit proche expiration
+            </p>
+
+          </div>
+
+          <!-- Liste -->
+          <div class="space-y-4 overflow-y-auto pr-2 flex-1">
+            <div
+                    *ngFor="let produit of produitsExpirationProche"
+                    class="flex items-center justify-between
+                 border border-orange-100
+                 rounded-2xl p-4
+                 hover:bg-orange-50 transition"
+            >
+
+              <!-- Infos -->
+              <div class="flex items-center gap-4">
+
+                <!-- Icone -->
+                <div
+                        class="w-14 h-14 rounded-2xl
+                     bg-orange-100
+                     flex items-center justify-center"
+                >
+
+                  <i class="ri-alarm-warning-line text-2xl text-orange-500"></i>
+
+                </div>
+
+                <!-- Texte -->
+                <div>
+
+                  <h4 class="font-semibold text-gray-800 text-base">
+                    {{ produit.nom }}
+                  </h4>
+
+                  <p class="text-sm text-gray-500 mt-1">
+
+                    Expire le :
+
+                    <span class="font-semibold text-orange-500">
+                  {{ produit.date_expiration }}
+                </span>
+
+                  </p>
+
+                </div>
+
+              </div>
+
+              <!-- Badge -->
+              <div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
-  </div>
 </div>
