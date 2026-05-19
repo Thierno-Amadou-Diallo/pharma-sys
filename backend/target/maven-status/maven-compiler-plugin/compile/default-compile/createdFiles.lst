@@ -1,9 +1,13 @@
-com\pharmasys\repository\StockRepository.class
-com\pharmasys\repository\ProduitRepository.class
-com\pharmasys\model\Stock.class
+com\pharmasys\service\AuthService.class
 com\pharmasys\controller\StockController.class
 com\pharmasys\PharmaSysApplication.class
 com\pharmasys\service\ProduitService.class
+com\pharmasys\controller\AuthController.class
+com\pharmasys\repository\StockRepository.class
+com\pharmasys\repository\ProduitRepository.class
+com\pharmasys\model\Stock.class
+com\pharmasys\model\User.class
+com\pharmasys\repository\UserRepository.class
 com\pharmasys\service\StockService.class
 com\pharmasys\model\Produit.class
 com\pharmasys\controller\ProduitController.class

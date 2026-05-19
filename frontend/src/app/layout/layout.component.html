@@ -1,0 +1,329 @@
+<div class="flex h-screen bg-gray-100">
+
+    <!-- SIDEBAR -->
+    <aside
+            class="w-72 bg-white shadow-xl z-10 flex flex-col
+           rounded-tr-3xl rounded-br-3xl overflow-hidden
+           border-r border-gray-100"
+    >
+
+        <!-- Logo -->
+        <div class="px-6 py-6 border-b border-gray-100">
+
+            <div class="flex items-center gap-4">
+
+                <!-- Icône Logo -->
+                <div
+                        class="w-14 h-14 rounded-2xl
+                 bg-gradient-to-br from-blue-500 to-indigo-500
+                 flex items-center justify-center shadow-lg"
+                >
+
+                    <i class="ri-capsule-fill text-white text-3xl"></i>
+
+                </div>
+
+                <!-- Texte -->
+                <div class="flex flex-col">
+
+          <span class="text-3xl font-extrabold text-blue-600 leading-none">
+            PharmaSys
+          </span>
+
+                    <span
+                            class="text-[11px] tracking-[3px]
+                   text-gray-400 font-semibold mt-1"
+                    >
+            PHARMA MANAGEMENT
+          </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MENU -->
+        <nav class="flex flex-col gap-3 px-3 py-6">
+
+            <!-- Dashboard -->
+            <a
+                    routerLink="/dashboard"
+                    routerLinkActive="active"
+                    (click)="activeMenu = 'dashboard'"
+
+                    class="group flex items-center gap-4 px-5 py-4 rounded-2xl
+               transition-all duration-300 ease-in-out
+               font-semibold"
+
+                    [ngClass]="
+          activeMenu === 'dashboard'
+            ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
+            : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600 hover:translate-x-1'
+        "
+            >
+
+                <div
+                        class="w-11 h-11 rounded-xl flex items-center justify-center
+                 transition-all duration-300"
+
+                        [ngClass]="
+            activeMenu === 'dashboard'
+              ? 'bg-white/20'
+              : 'bg-blue-100 group-hover:bg-blue-200'
+          "
+                >
+
+                    <i
+                            class="ri-layout-grid-fill text-xl"
+
+                            [ngClass]="
+              activeMenu === 'dashboard'
+                ? 'text-white'
+                : 'text-blue-600'
+            "
+                    ></i>
+
+                </div>
+
+                <span
+                        class="text-[15px]"
+
+                        [ngClass]="
+            activeMenu === 'dashboard'
+              ? 'text-white'
+              : 'text-gray-700'
+          "
+                >
+          Tableau de bord
+        </span>
+
+            </a>
+
+            <!-- Médicaments -->
+            <a
+                    routerLink="/produits"
+                    routerLinkActive="active"
+                    (click)="activeMenu = 'medicaments'"
+
+                    class="group flex items-center gap-4 px-5 py-4 rounded-2xl
+               transition-all duration-300 ease-in-out
+               font-semibold"
+
+                    [ngClass]="
+          activeMenu === 'medicaments'
+            ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
+            : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600 hover:translate-x-1'
+        "
+            >
+
+                <div
+                        class="w-11 h-11 rounded-xl flex items-center justify-center
+                 transition-all duration-300"
+
+                        [ngClass]="
+            activeMenu === 'medicaments'
+              ? 'bg-white/20'
+              : 'bg-blue-100 group-hover:bg-blue-200'
+          "
+                >
+
+                    <i
+                            class="ri-capsule-fill text-xl"
+
+                            [ngClass]="
+              activeMenu === 'medicaments'
+                ? 'text-white'
+                : 'text-blue-600'
+            "
+                    ></i>
+
+                </div>
+
+                <span
+                        class="text-[15px]"
+
+                        [ngClass]="
+            activeMenu === 'medicaments'
+              ? 'text-white'
+              : 'text-gray-700'
+          "
+                >
+          Médicaments
+        </span>
+
+            </a>
+
+            <!-- Stocks -->
+            <a
+                    routerLink="/stocks"
+                    routerLinkActive="active"
+                    (click)="activeMenu = 'stocks'"
+
+                    class="group flex items-center gap-4 px-5 py-4 rounded-2xl
+               transition-all duration-300 ease-in-out
+               font-semibold"
+
+                    [ngClass]="
+          activeMenu === 'stocks'
+            ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
+            : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600 hover:translate-x-1'
+        "
+            >
+
+                <div
+                        class="w-11 h-11 rounded-xl flex items-center justify-center
+                 transition-all duration-300"
+
+                        [ngClass]="
+            activeMenu === 'stocks'
+              ? 'bg-white/20'
+              : 'bg-blue-100 group-hover:bg-blue-200'
+          "
+                >
+
+                    <i
+                            class="ri-database-2-fill text-xl"
+
+                            [ngClass]="
+              activeMenu === 'stocks'
+                ? 'text-white'
+                : 'text-blue-600'
+            "
+                    ></i>
+
+                </div>
+
+                <span
+                        class="text-[15px]"
+
+                        [ngClass]="
+            activeMenu === 'stocks'
+              ? 'text-white'
+              : 'text-gray-700'
+          "
+                >
+          Stocks
+        </span>
+
+            </a>
+
+        </nav>
+
+        <!-- Footer User -->
+        <div class="mt-auto p-5">
+
+            <div
+                    class="bg-gradient-to-r from-blue-500 to-indigo-500
+           rounded-2xl p-4 text-white shadow-lg"
+            >
+
+                <div class="flex items-center gap-3">
+
+                    <!-- Avatar -->
+                    <div
+                            class="w-14 h-14 rounded-full bg-white/20
+               flex items-center justify-center
+               text-2xl font-bold uppercase"
+                    >
+
+                        {{ currentUser?.nom?.charAt(0) }}
+
+                    </div>
+
+                    <!-- Infos utilisateur -->
+                    <div class="flex flex-col">
+
+        <span class="font-bold text-sm">
+          {{ currentUser?.nom }}
+        </span>
+
+                        <span class="text-xs text-blue-100">
+          {{ currentUser?.role }}
+        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Séparation -->
+                <div class="h-px bg-white/20 my-4"></div>
+
+                <!-- Bouton -->
+                <button
+                        (click)="logout()"
+                        class="w-full bg-white/10 hover:bg-white/20
+             transition rounded-xl py-2 text-sm
+             font-medium flex items-center justify-center gap-2"
+                >
+
+                    <i class="ri-logout-box-r-line"></i>
+
+                    Déconnexion
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- RIGHT SIDE -->
+    <div class="flex-1 flex flex-col">
+
+        <!-- TOPBAR -->
+        <div
+                class="bg-white shadow-sm px-8 h-20
+             flex items-center justify-between
+             border-b border-gray-100"
+        >
+
+            <!-- Recherche -->
+            <div class="relative w-96">
+
+                <input
+                        type="text"
+                        placeholder="Rechercher un médicament..."
+                        class="w-full pl-12 pr-5 py-3 rounded-2xl
+                 border border-gray-200 bg-gray-50
+                 text-sm placeholder-gray-400
+                 focus:outline-none focus:ring-2
+                 focus:ring-blue-500
+                 focus:border-transparent transition"
+                />
+
+                <div class="absolute inset-y-0 left-4 flex items-center">
+
+                    <i class="ri-search-line text-gray-400 text-lg"></i>
+
+                </div>
+
+            </div>
+
+            <!-- Date -->
+            <div
+                    class="flex items-center gap-3 bg-blue-50 text-blue-700
+               px-5 py-3 rounded-2xl font-semibold shadow-sm"
+            >
+
+                <i class="ri-calendar-2-fill text-lg"></i>
+
+                <span>
+          {{ currentDate }}
+        </span>
+
+            </div>
+
+        </div>
+
+        <!-- CONTENU -->
+        <div class="p-6 overflow-y-auto flex-1">
+
+            <router-outlet></router-outlet>
+
+        </div>
+
+    </div>
+
+</div>

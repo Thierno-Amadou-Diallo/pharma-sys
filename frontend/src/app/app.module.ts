@@ -12,6 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import localeFr from '@angular/common/locales/fr';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
+import { LayoutComponent } from './layout/layout.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -20,14 +23,17 @@ registerLocaleData(localeFr);
     ProduitsComponent,
     DashboardComponent,
     StocksComponent,
-    AjouterProduitComponent   
+    AjouterProduitComponent,
+    LoginComponent,
+    LayoutComponent   
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-   NgChartsModule
+   NgChartsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
