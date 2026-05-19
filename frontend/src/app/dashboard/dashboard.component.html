@@ -3,80 +3,207 @@
   <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
 
     <!-- Titre -->
-<div class="mb-6">
-  <h2 class="text-xl font-semibold text-blue-600 flex items-center gap-2">
-    <span class="w-1 h-6 bg-blue-300 rounded-sm inline-block"></span>
-    Tableau de bord
-  </h2>
-</div>
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-blue-600 flex items-center gap-2">
+        <span class="w-1 h-6 bg-blue-300 rounded-sm inline-block"></span>
+        Tableau de bord
+      </h2>
+    </div>
 
-    <!-- Cartes de statistiques -->
+    <!-- Cartes statistiques -->
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
       <div class="bg-white p-5 rounded-xl border-l-4 border-blue-500 shadow">
         <h3 class="text-sm text-gray-500">Total Produits</h3>
-        <p class="text-2xl font-bold text-blue-700">{{ produits.length }}</p>
+        <p class="text-2xl font-bold text-blue-700">
+          {{ produits.length }}
+        </p>
       </div>
 
       <div class="bg-white p-5 rounded-xl border-l-4 border-green-500 shadow">
         <h3 class="text-sm text-gray-500">Quantité Totale</h3>
-        <p class="text-2xl font-bold text-green-700">{{ totalQuantite }}</p>
+        <p class="text-2xl font-bold text-green-700">
+          {{ totalQuantite }}
+        </p>
       </div>
 
       <div class="bg-white p-5 rounded-xl border-l-4 border-yellow-500 shadow">
         <h3 class="text-sm text-gray-500">Produits en Rupture</h3>
-        <p class="text-2xl font-bold text-yellow-600">{{ produitsRupture.length }}</p>
+        <p class="text-2xl font-bold text-yellow-600">
+          {{ produitsRupture.length }}
+        </p>
       </div>
 
       <div class="bg-white p-5 rounded-xl border-l-4 border-red-500 shadow">
         <h3 class="text-sm text-gray-500">Produits Indisponibles</h3>
-        <p class="text-2xl font-bold text-red-600">{{ produitsIndisponibles.length }}</p>
+        <p class="text-2xl font-bold text-red-600">
+          {{ produitsIndisponibles.length }}
+        </p>
       </div>
+
     </div>
 
-  <!-- Graphique produits -->
-<div class="flex flex-wrap gap-6">
-  <!-- Carte du graphique -->
-  <div class="bg-white p-6 rounded-xl shadow-md w-full md:w-1/2 lg:w-1/3">
-    <h3 class="text-lg font-semibold text-blue-600/90 text-center mb-6">Répartition des produits</h3>
+    <!-- Section graphique + alertes -->
+    <div class="flex flex-col xl:flex-row gap-6">
 
-    <div class="relative h-60 w-60 mx-auto mb-6">
-      <canvas
-        *ngIf="chartData.length"
-        baseChart
-        [data]="{
-          labels: chartLabels,
-          datasets: [{
-            data: chartData,
-            backgroundColor: chartColors
-          }]
+      <!-- Carte Graphique -->
+      <div class="bg-white p-6 rounded-2xl shadow-md w-full xl:w-[420px]">
+
+        <h3 class="text-xl font-semibold text-blue-600 text-center mb-6">
+          Répartition des produits
+        </h3>
+
+        <!-- Graphique -->
+        <div class="relative h-72 w-72 mx-auto mb-6">
+          <canvas
+                  baseChart
+                  [data]="chartData"
+                  [type]="'doughnut'"
+                  [options]="{
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  }"
+          >
+          </canvas>
+        </div>
+
+        <!-- Légende -->
+        <div class="flex justify-center gap-6 flex-wrap text-sm">
+
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-2 rounded-full bg-green-500"></div>
+            <span class="text-gray-500 font-medium">
+              En stock
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-2 rounded-full bg-yellow-400"></div>
+            <span class="text-gray-500 font-medium">
+              Alerte
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-2 rounded-full bg-red-500"></div>
+            <span class="text-gray-500 font-medium">
+              Rupture
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Carte Alertes -->
+      <div class="bg-white p-6 rounded-2xl shadow-md flex-1">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+
+          <h3 class="text-xl font-semibold text-red-600 flex items-center gap-2">
+            <i class="ri-alert-line"></i>
+            Alertes Stock
+          </h3>
+
+          <span class="bg-red-100 text-red-600 text-sm font-semibold px-3 py-1 rounded-full">
+            {{ alertStocks.length }} alertes
+          </span>
+
+        </div>
+
+        <!-- Aucun problème -->
+        <div
+                *ngIf="alertStocks.length === 0"
+                class="flex flex-col items-center justify-center h-[320px] text-gray-400"
+        >
+
+          <i class="ri-checkbox-circle-line text-6xl text-green-500 mb-4"></i>
+
+          <p class="text-lg font-medium">
+            Aucun problème détecté
+          </p>
+
+        </div>
+
+        <!-- Liste des alertes -->
+        <div class="space-y-4">
+
+          <div
+                  *ngFor="let stock of alertStocks"
+                  class="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-2xl p-4 hover:shadow-md hover:bg-white transition-all duration-200"
+          >
+
+            <!-- Partie gauche -->
+            <div class="flex items-center gap-4">
+
+              <!-- Icône -->
+              <div
+                      class="w-12 h-12 rounded-xl flex items-center justify-center"
+                      [ngClass]="{
+          'bg-yellow-100 text-yellow-600': stock.quantite > 0,
+          'bg-red-100 text-red-600': stock.quantite <= 0
         }"
-        [type]="'doughnut'"
-        [options]="{
-          responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: { display: false }
-          }
+              >
+                <i class="ri-capsule-line text-2xl"></i>
+              </div>
+
+              <!-- Infos produit -->
+              <div>
+
+                <h4 class="font-semibold text-gray-800 text-lg">
+                  {{ stock.nom }}
+                </h4>
+
+                <p class="text-sm text-gray-500 mt-1">
+                  Quantité restante :
+                  <span class="font-bold text-gray-700">
+            {{ stock.quantite }}
+          </span>
+                </p>
+
+              </div>
+
+            </div>
+
+            <!-- Partie droite -->
+            <div class="text-right">
+
+              <!-- Badge -->
+              <span
+                      class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold"
+                      [ngClass]="{
+          'bg-yellow-100 text-yellow-700': stock.quantite > 0,
+          'bg-red-100 text-red-700': stock.quantite <= 0
         }"
-      ></canvas>
+              >
+
+        <i
+                [ngClass]="{
+            'ri-alert-line': stock.quantite > 0,
+            'ri-close-circle-line': stock.quantite <= 0
+          }"
+        ></i>
+
+        {{
+          stock.quantite > 0
+            ? 'ALERTE'
+            : 'RUPTURE'
+        }}
+
+      </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
     </div>
 
-    <!-- Légende en ligne -->
-    <div class="flex justify-center gap-6 flex-wrap text-sm">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-2 rounded-full bg-green-500"></div>
-        <span class="text-gray-500/90 font-medium">En stock</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-2 rounded-full bg-yellow-400"></div>
-        <span class="text-gray-500/90 font-medium">Rupture</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-2 rounded-full bg-red-500"></div>
-        <span class="text-gray-500/90 font-medium">Indisponible</span>
-      </div>
-    </div>
   </div>
-</div>
-
 </div>
