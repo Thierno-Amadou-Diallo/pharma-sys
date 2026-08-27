@@ -191,22 +191,25 @@
 
 
     <!-- Section graphique + alertes -->
-    <div class="flex flex-col xl:flex-row gap-6">
-
+    <div class="flex flex-col xl:flex-row items-start gap-6">
       <!-- Graphique -->
-      <div class="bg-white p-6 rounded-2xl shadow-md w-full xl:w-[420px] flex flex-col justify-center">
+      <div class="bg-white p-6 rounded-2xl shadow-md w-full xl:w-[420px]">
 
-        <h3 class="text-xl font-semibold text-blue-600 text-center mb-6">
+        <!-- Titre -->
+        <h3 class="text-xl font-semibold text-blue-600 text-center mb-10">
           Répartition des produits
         </h3>
 
-        <!-- Chart -->
-        <div class="relative h-72 w-72 mx-auto my-auto">
-          <canvas
-                  baseChart
-                  [data]="chartData"
-                  [type]="'doughnut'"
-                  [options]="{
+        <!-- Graphique -->
+        <div class="flex flex-col items-center justify-center h-[520px]">
+
+          <div class="relative h-72 w-72">
+
+            <canvas
+                    baseChart
+                    [data]="chartData"
+                    [type]="'doughnut'"
+                    [options]="{
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
@@ -215,42 +218,51 @@
             }
           }
         }"
-          >
-          </canvas>
+            >
+            </canvas>
 
-          <!-- Centre -->
-          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <!-- Centre -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
 
-        <span class="text-3xl font-bold text-yellow-500">
+        <span class="text-4xl font-bold text-yellow-500">
           {{ pourcentageAlerte }}%
         </span>
 
+              <span class="text-sm text-gray-400 font-medium mt-1">
+          Alertes
+        </span>
+
+            </div>
+
           </div>
 
-        </div>
+          <!-- Légende -->
+          <div class="flex justify-center gap-6 flex-wrap text-sm mt-10">
 
-        <!-- Légende -->
-        <div class="flex justify-center gap-6 flex-wrap text-sm">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-2 rounded-full bg-green-500"></div>
 
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-2 rounded-full bg-green-500"></div>
-            <span class="text-gray-500 font-medium">
+              <span class="text-gray-500 font-medium">
           En stock
         </span>
-          </div>
+            </div>
 
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-2 rounded-full bg-yellow-400"></div>
-            <span class="text-gray-500 font-medium">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-2 rounded-full bg-yellow-400"></div>
+
+              <span class="text-gray-500 font-medium">
           Alerte
         </span>
-          </div>
+            </div>
 
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-2 rounded-full bg-red-500"></div>
-            <span class="text-gray-500 font-medium">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-2 rounded-full bg-red-500"></div>
+
+              <span class="text-gray-500 font-medium">
           Rupture
         </span>
+            </div>
+
           </div>
 
         </div>

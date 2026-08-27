@@ -93,8 +93,9 @@ export class DashboardComponent implements OnInit {
           p => p.quantite > 0 && p.quantite <= 5
       );
 
-      // Produits proches expiration (< 30 jours)
+      // Produits proches de l'expiration
       const aujourdHui = new Date();
+      aujourdHui.setHours(0, 0, 0, 0);
 
       this.produitsExpirationProche = this.produits.filter(p => {
 
@@ -102,13 +103,36 @@ export class DashboardComponent implements OnInit {
           return false;
         }
 
-        const dateExp = new Date(p.date_expiration);
+        let dateExp: Date;
 
-        const diffTime = dateExp.getTime() - aujourdHui.getTime();
+        // Format JJ/MM/AAAA
+        if (p.date_expiration.includes('/')) {
 
-        const diffDays = diffTime / (1000 * 3600 * 24);
+          const [jour, mois, annee] =
+              p.date_expiration.split('/').map(Number);
 
-        return diffDays > 0 && diffDays <= 30;
+          dateExp = new Date(annee, mois - 1, jour);
+
+        } else {
+
+          // Format AAAA-MM-JJ
+          const [annee, mois, jour] =
+              p.date_expiration.split('-').map(Number);
+
+          dateExp = new Date(annee, mois - 1, jour);
+        }
+
+        dateExp.setHours(0, 0, 0, 0);
+
+        const diffTime =
+            dateExp.getTime() - aujourdHui.getTime();
+
+        const diffDays =
+            Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        // Entre 30 jours avant expiration
+        // et 30 jours après expiration
+        return diffDays >= -30 && diffDays <= 30;
       });
 
       // Produits normaux
