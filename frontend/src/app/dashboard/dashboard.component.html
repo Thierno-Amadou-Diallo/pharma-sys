@@ -1,6 +1,6 @@
-<div class="p-6">
+<div class="p-6 bg-slate-200 min-h-screen">
   <!-- Bloc principal -->
-  <div class="bg-gray-50 p-6 rounded-2xl shadow-md">
+  <div class="bg-slate-100 p-6 rounded-2xl shadow-md">
 
     <!-- Titre -->
     <div class="mb-6">
@@ -470,10 +470,8 @@
 
                   <p class="text-sm text-gray-500 mt-1">
 
-                    Expire le :
-
                     <span class="font-semibold text-orange-500">
-                  {{ produit.date_expiration }}
+                    {{ getExpirationText(produit.date_expiration) }}
                 </span>
 
                   </p>

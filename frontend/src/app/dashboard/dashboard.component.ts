@@ -174,4 +174,68 @@ export class DashboardComponent implements OnInit {
               : 0;
     });
   }
+  getExpirationText(dateExpiration: string): string {
+
+    if (!dateExpiration) {
+      return '';
+    }
+
+    let dateExp: Date;
+
+    // Format JJ/MM/AAAA
+    if (dateExpiration.includes('/')) {
+
+      const [jour, mois, annee] =
+          dateExpiration.split('/').map(Number);
+
+      dateExp = new Date(annee, mois - 1, jour);
+
+    } else {
+
+      // Format AAAA-MM-JJ
+      const [annee, mois, jour] =
+          dateExpiration.split('-').map(Number);
+
+      dateExp = new Date(annee, mois - 1, jour);
+    }
+
+    dateExp.setHours(0, 0, 0, 0);
+
+    const aujourdHui = new Date();
+    aujourdHui.setHours(0, 0, 0, 0);
+
+    const diffTime =
+        dateExp.getTime() - aujourdHui.getTime();
+
+    const diffDays =
+        Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    // Expiré
+    if (diffDays < 0) {
+
+      const jours = Math.abs(diffDays);
+
+      return jours === 1
+          ? 'Expiré depuis 1 jour'
+          : `Expiré depuis ${jours} jours`;
+    }
+
+    // Aujourd'hui
+    if (diffDays === 0) {
+      return "Expire aujourd'hui";
+    }
+
+    // Demain
+    if (diffDays === 1) {
+      return 'Expire demain';
+    }
+
+    // Une semaine
+    if (diffDays === 7) {
+      return 'Expire dans 1 semaine';
+    }
+
+    // Tous les autres cas
+    return `Expire dans ${diffDays} jours`;
+  }
 }
