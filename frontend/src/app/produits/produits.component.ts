@@ -184,37 +184,74 @@ export class ProduitsComponent implements OnInit {
       this.formulaireProduitElement?.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   }
-
   onSubmit() {
     if (this.formulaireProduit.invalid) return;
 
     this.envoiEnCours = true;
+
     const produitData = {
       ...this.formulaireProduit.value,
       statut: this.currentStatut.text
     };
 
     if (this.produitEnEdition) {
-      this.produitService.modifierProduit(this.produitEnEdition.id, produitData)
-        .subscribe({
-          next: (produit) => {
-            const index = this.produits.findIndex(p => p.id === produit.id);
-            if (index !== -1) this.produits[index] = produit;
-            this.fermerFormulaire();
-          },
-          error: (err) => console.error(err),
-          complete: () => this.envoiEnCours = false
-        });
+
+      // MODIFICATION
+      this.produitService
+          .modifierProduit(this.produitEnEdition.id, produitData)
+          .subscribe({
+            next: (produit) => {
+
+              const index = this.produits.findIndex(
+                  p => p.id === produit.id
+              );
+
+              if (index !== -1) {
+                this.produits[index] = produit;
+              }
+
+              // Met à jour les résultats filtrés
+              this.filtrerProduits();
+
+              this.fermerFormulaire();
+            },
+
+            error: (err) => {
+              console.error(err);
+              this.envoiEnCours = false;
+            },
+
+            complete: () => {
+              this.envoiEnCours = false;
+            }
+          });
+
     } else {
-      this.produitService.ajouterProduit(produitData)
-        .subscribe({
-          next: (produit) => {
-            this.produits.unshift(produit);
-            this.fermerFormulaire();
-          },
-          error: (err) => console.error(err),
-          complete: () => this.envoiEnCours = false
-        });
+
+      // AJOUT
+      this.produitService
+          .ajouterProduit(produitData)
+          .subscribe({
+            next: (produit) => {
+
+              this.produits.unshift(produit);
+
+              // Très important :
+              // met à jour la liste affichée
+              this.filtrerProduits();
+
+              this.fermerFormulaire();
+            },
+
+            error: (err) => {
+              console.error(err);
+              this.envoiEnCours = false;
+            },
+
+            complete: () => {
+              this.envoiEnCours = false;
+            }
+          });
     }
   }
 
