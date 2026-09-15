@@ -1,16 +1,5 @@
 <div class="p-6 max-w-6xl mx-auto bg-gray-50 min-h-screen">
 
-  <!-- Bouton Ajouter -->
-  <div class="flex justify-end mb-4">
-    <button
-      class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 shadow-md"
-      (click)="ouvrirFormulaireAjout()"
-    >
-      <i class="ri-add-line text-lg"></i>
-      Ajouter un produit
-    </button>
-  </div>
-
   <!-- Formulaire Ajouter / Modifier -->
   <div
       #formulaireProduitRef
@@ -96,6 +85,114 @@
     </form>
   </div>
 
+
+  <!-- RECHERCHE ET FILTRES -->
+  <div class="bg-blue-50 p-5 rounded-xl shadow-md border border-blue-100 mb-6">
+
+    <h4 class="text-lg font-semibold text-blue-600 mb-4 flex items-center gap-2">
+      <i class="ri-filter-3-line"></i>
+      Recherche et filtres
+    </h4>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+      <!-- Recherche -->
+      <div class="lg:col-span-1">
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          Rechercher
+        </label>
+
+        <div class="relative">
+          <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+          <input
+                  type="text"
+                  [(ngModel)]="rechercheProduit"
+                  (input)="filtrerProduits()"
+                  placeholder="Nom ou code..."
+                  class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg
+                 focus:outline-none focus:ring-2 focus:ring-blue-300
+                 bg-white">
+        </div>
+      </div>
+
+      <!-- Statut -->
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          Statut
+        </label>
+
+        <select
+                [(ngModel)]="filtreStatut"
+                (change)="filtrerProduits()"
+                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg
+               bg-white focus:outline-none focus:ring-2 focus:ring-blue-300">
+
+          <option value="Tous">Tous</option>
+          <option value="En stock">En stock</option>
+          <option value="Rupture">Rupture</option>
+          <option value="Indisponible">Indisponible</option>
+
+        </select>
+      </div>
+
+      <!-- Stock -->
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          Stock
+        </label>
+
+        <select
+                [(ngModel)]="filtreStock"
+                (change)="filtrerProduits()"
+                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg
+               bg-white focus:outline-none focus:ring-2 focus:ring-blue-300">
+
+          <option value="Tous">Tous</option>
+          <option value="Faible">Stock faible</option>
+          <option value="Rupture">Rupture</option>
+
+        </select>
+      </div>
+
+      <!-- Expiration -->
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">
+          Expiration
+        </label>
+
+        <select
+                [(ngModel)]="filtreExpiration"
+                (change)="filtrerProduits()"
+                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg
+               bg-white focus:outline-none focus:ring-2 focus:ring-blue-300">
+
+          <option value="Tous">Tous</option>
+          <option value="Proche">Expiration proche</option>
+
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Bouton réinitialiser -->
+    <div class="flex justify-end mt-4">
+
+      <button
+              type="button"
+              (click)="reinitialiserFiltres()"
+              class="px-4 py-2 text-sm text-blue-600 bg-white
+             border border-blue-200 rounded-lg
+             hover:bg-blue-50 transition flex items-center gap-2">
+
+        <i class="ri-refresh-line"></i>
+        Réinitialiser
+      </button>
+
+    </div>
+
+  </div>
+
   <!-- Liste des produits -->
   <div class="bg-gray-100 p-6 rounded-xl shadow-lg border border-gray-200">
     <h4 class="text-xl font-semibold text-blue-600 border-l-4 border-blue-300 pl-3 mb-4">
@@ -116,7 +213,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-          <tr *ngFor="let produit of produits" class="hover:bg-blue-50 transition cursor-pointer">
+          <tr *ngFor="let produit of produitsFiltres" class="hover:bg-blue-50 transition cursor-pointer">
             <td class="py-3 px-5 border-r border-gray-100 font-medium hover:text-blue-600 transition">
               {{ produit.nom }}
             </td>
@@ -197,4 +294,18 @@
       </div>
     </div>
   </div>
+
+  <!-- Bouton Ajouter -->
+  <div class="flex justify-end mt-8">
+    <button
+            class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 shadow-md"
+            (click)="ouvrirFormulaireAjout()"
+    >
+      <i class="ri-add-line text-lg"></i>
+      Ajouter un produit
+    </button>
+  </div>
+
 </div>
+
+

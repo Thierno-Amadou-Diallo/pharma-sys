@@ -13,6 +13,13 @@ export class ProduitsComponent implements OnInit {
   formulaireProduit: FormGroup;
   envoiEnCours = false;
 
+  produitsFiltres: Produit[] = [];
+  rechercheProduit = '';
+  filtreStatut = 'Tous';
+  filtreStock = 'Tous';
+  filtreExpiration = 'Tous';
+
+
   // 🔥 Boîte de dialogue de suppression
   produitASupprimer: Produit | null = null;
 
@@ -39,7 +46,95 @@ export class ProduitsComponent implements OnInit {
   chargerProduits() {
     this.produitService.getProduits().subscribe(data => {
       this.produits = data;
+      this.produitsFiltres = [...this.produits];
     });
+  }
+
+  filtrerProduits(): void {
+    const recherche = this.rechercheProduit.toLowerCase().trim();
+
+    this.produitsFiltres = this.produits.filter(produit => {
+
+      // Recherche par nom ou code
+      const correspondRecherche =
+          !recherche ||
+          produit.nom.toLowerCase().includes(recherche) ||
+          produit.code.toLowerCase().includes(recherche);
+
+      // Filtre statut
+      const correspondStatut =
+          this.filtreStatut === 'Tous' ||
+          produit.statut === this.filtreStatut;
+
+      // Filtre stock
+      let correspondStock = true;
+
+      if (this.filtreStock === 'Faible') {
+        correspondStock =
+            produit.quantite > 0 && produit.quantite <= 5;
+      }
+
+      if (this.filtreStock === 'Rupture') {
+        correspondStock = produit.quantite <= 0;
+      }
+
+      // Filtre expiration
+      let correspondExpiration = true;
+
+      if (this.filtreExpiration === 'Proche') {
+        correspondExpiration = this.estExpirationProche(
+            produit.date_expiration
+        );
+      }
+
+      return (
+          correspondRecherche &&
+          correspondStatut &&
+          correspondStock &&
+          correspondExpiration
+      );
+    });
+  }
+
+  estExpirationProche(dateExpiration: string): boolean {
+    if (!dateExpiration) {
+      return false;
+    }
+
+    let dateExp: Date;
+
+    if (dateExpiration.includes('/')) {
+      const [jour, mois, annee] =
+          dateExpiration.split('/').map(Number);
+
+      dateExp = new Date(annee, mois - 1, jour);
+    } else {
+      const [annee, mois, jour] =
+          dateExpiration.split('-').map(Number);
+
+      dateExp = new Date(annee, mois - 1, jour);
+    }
+
+    const aujourdHui = new Date();
+    aujourdHui.setHours(0, 0, 0, 0);
+    dateExp.setHours(0, 0, 0, 0);
+
+    const diffTime =
+        dateExp.getTime() - aujourdHui.getTime();
+
+    const diffJours =
+        Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffJours >= 0 && diffJours <= 30;
+  }
+
+  reinitialiserFiltres(): void {
+    this.rechercheProduit = '';
+    this.filtreStatut = 'Tous';
+    this.filtreStock = 'Tous';
+    this.filtreExpiration = 'Tous';
+
+    this.produitsFiltres = [...this.produits];
   }
 
   get currentStatut() {
