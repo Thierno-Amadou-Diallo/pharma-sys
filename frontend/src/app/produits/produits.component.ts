@@ -13,7 +13,11 @@ export class ProduitsComponent implements OnInit {
   formulaireProduit: FormGroup;
   envoiEnCours = false;
 
+  nombreFiltresActifs = 0;
+
   produitsFiltres: Produit[] = [];
+  produitsParPage = 8;
+  pageActuelle = 1;
   rechercheProduit = '';
   filtreStatut = 'Tous';
   filtreStock = 'Tous';
@@ -50,7 +54,45 @@ export class ProduitsComponent implements OnInit {
     });
   }
 
+  get produitsAffiches(): Produit[] {
+    const debut = (this.pageActuelle - 1) * this.produitsParPage;
+    const fin = debut + this.produitsParPage;
+
+    return this.produitsFiltres.slice(debut, fin);
+  }
+
+  get nombrePages(): number {
+    return Math.ceil(this.produitsFiltres.length / this.produitsParPage);
+  }
+
+  changerPage(page: number): void {
+    if (page < 1 || page > this.nombrePages) {
+      return;
+    }
+
+    this.pageActuelle = page;
+  }
+
   filtrerProduits(): void {
+
+    this.nombreFiltresActifs = 0;
+
+    if (this.rechercheProduit.trim() !== '') {
+      this.nombreFiltresActifs++;
+    }
+
+    if (this.filtreStatut !== 'Tous') {
+      this.nombreFiltresActifs++;
+    }
+
+    if (this.filtreStock !== 'Tous') {
+      this.nombreFiltresActifs++;
+    }
+
+    if (this.filtreExpiration !== 'Tous') {
+      this.nombreFiltresActifs++;
+    }
+
     const recherche = this.rechercheProduit.toLowerCase().trim();
 
     this.produitsFiltres = this.produits.filter(produit => {
@@ -133,6 +175,7 @@ export class ProduitsComponent implements OnInit {
     this.filtreStatut = 'Tous';
     this.filtreStock = 'Tous';
     this.filtreExpiration = 'Tous';
+    this.nombreFiltresActifs = 0;
 
     this.produitsFiltres = [...this.produits];
   }
@@ -282,5 +325,45 @@ export class ProduitsComponent implements OnInit {
     this.afficherFormulaire = false;
     this.produitEnEdition = null;
     this.envoiEnCours = false;
+  }
+
+  exporterProduits(): void {
+    const produitsAExporter = this.produitsFiltres;
+
+    if (produitsAExporter.length === 0) {
+      return;
+    }
+
+    const lignes = produitsAExporter.map(produit => ({
+      Nom: produit.nom,
+      Code: produit.code,
+      Quantite: produit.quantite,
+      Prix: produit.prix,
+      Expiration: produit.date_expiration,
+      Statut: produit.statut
+    }));
+
+    const csv = [
+      Object.keys(lignes[0]).join(';'),
+      ...lignes.map(ligne =>
+          Object.values(ligne)
+              .map(value => `"${value ?? ''}"`)
+              .join(';')
+      )
+    ].join('\n');
+
+    const blob = new Blob(
+        ['\ufeff' + csv],
+        { type: 'text/csv;charset=utf-8;' }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const lien = document.createElement('a');
+
+    lien.href = url;
+    lien.download = 'medicaments.csv';
+    lien.click();
+
+    URL.revokeObjectURL(url);
   }
 }

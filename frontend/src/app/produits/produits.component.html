@@ -1,4 +1,60 @@
-<div class="p-6 max-w-6xl mx-auto bg-gray-50 min-h-screen">
+<div class="p-6 w-full max-w-[1600px] mx-auto bg-gray-50 min-h-screen">
+
+  <!-- EN-TÊTE DE LA PAGE -->
+  <div class="flex items-start justify-between mb-8">
+
+    <!-- Titre -->
+    <div class="flex items-start gap-3">
+
+      <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
+        <i class="ri-capsule-fill text-blue-600 text-xl"></i>
+      </div>
+
+      <div>
+        <h1 class="text-2xl font-bold text-blue-700">
+          Gestion des médicaments
+        </h1>
+
+        <p class="text-sm text-gray-500 mt-1">
+          Gérez votre catalogue, vos stocks et vos expirations.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex items-center gap-3">
+
+      <!-- Exporter -->
+      <button
+              type="button"
+              (click)="exporterProduits()"
+              class="flex items-center gap-2 px-4 py-2.5
+             bg-white text-blue-600
+             border border-blue-200
+             rounded-lg shadow-sm
+             hover:bg-blue-50 transition">
+
+        <i class="ri-download-2-line"></i>
+        Exporter
+      </button>
+
+      <!-- Ajouter -->
+      <button
+              type="button"
+              (click)="ouvrirFormulaireAjout()"
+              class="flex items-center gap-2 px-5 py-2.5
+             bg-gradient-to-r from-green-500 to-green-600
+             hover:from-green-600 hover:to-green-700
+             text-white rounded-lg shadow-md transition">
+
+        <i class="ri-add-line text-lg"></i>
+        Ajouter un produit
+      </button>
+
+    </div>
+
+  </div>
 
   <!-- Formulaire Ajouter / Modifier -->
   <div
@@ -89,15 +145,22 @@
   <!-- RECHERCHE ET FILTRES -->
   <div class="bg-blue-50 p-5 rounded-xl shadow-md border border-blue-100 mb-6">
 
+    <!-- Titre -->
     <h4 class="text-lg font-semibold text-blue-600 mb-4 flex items-center gap-2">
       <i class="ri-filter-3-line"></i>
       Recherche et filtres
     </h4>
 
+    <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+      <i class="ri-information-line text-gray-400"></i>
+      <span>Utilisez les filtres pour affiner votre recherche</span>
+    </div>
+
+    <!-- Filtres -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
       <!-- Recherche -->
-      <div class="lg:col-span-1">
+      <div>
         <label class="block text-sm font-medium text-gray-600 mb-1">
           Rechercher
         </label>
@@ -112,7 +175,8 @@
                   placeholder="Nom ou code..."
                   class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg
                  focus:outline-none focus:ring-2 focus:ring-blue-300
-                 bg-white">
+                 bg-white"
+          >
         </div>
       </div>
 
@@ -175,20 +239,40 @@
 
     </div>
 
-    <!-- Bouton réinitialiser -->
-    <div class="flex justify-end mt-4">
+    <!-- Ligne inférieure -->
+    <div class="flex items-center justify-between mt-5 pt-4 border-t border-blue-100">
 
-      <button
-              type="button"
-              (click)="reinitialiserFiltres()"
-              class="px-4 py-2 text-sm text-blue-600 bg-white
+      <!-- Informations -->
+      <div class="flex items-center gap-2 text-sm text-gray-500">
+
+        <i class="ri-list-check-2 text-blue-500"></i>
+
+
+      </div>
+
+
+        <!-- Filtres actifs à gauche -->
+        <div class="flex-1 flex justify-start">
+    <span
+            class="px-3 py-1.5 rounded-full bg-blue-100 text-blue-600 text-xs font-medium">
+  Filtres actifs : {{ nombreFiltresActifs }}
+</span>
+        </div>
+
+        <!-- Réinitialiser à droite -->
+        <div class="flex-1 flex justify-end">
+          <button
+                  type="button"
+                  (click)="reinitialiserFiltres()"
+                  class="px-4 py-2 text-sm text-blue-600 bg-white
              border border-blue-200 rounded-lg
-             hover:bg-blue-50 transition flex items-center gap-2">
+             hover:bg-blue-50 transition
+             flex items-center gap-2">
 
-        <i class="ri-refresh-line"></i>
-        Réinitialiser
-      </button>
-
+            <i class="ri-refresh-line"></i>
+            Réinitialiser
+          </button>
+        </div>
     </div>
 
   </div>
@@ -196,7 +280,7 @@
   <!-- Liste des produits -->
   <div class="bg-gray-100 p-6 rounded-xl shadow-lg border border-gray-200">
     <h4 class="text-xl font-semibold text-blue-600 border-l-4 border-blue-300 pl-3 mb-4">
-      Liste des produits
+      Liste des médicaments
     </h4>
 
     <div class="overflow-x-auto rounded-lg border border-gray-200">
@@ -213,7 +297,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-          <tr *ngFor="let produit of produitsFiltres" class="hover:bg-blue-50 transition cursor-pointer">
+          <tr *ngFor="let produit of produitsAffiches" class="hover:bg-blue-50 transition cursor-pointer">
             <td class="py-3 px-5 border-r border-gray-100 font-medium hover:text-blue-600 transition">
               {{ produit.nom }}
             </td>
@@ -274,6 +358,71 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- PAGINATION -->
+      <div
+              *ngIf="produitsFiltres.length > 0"
+              class="mt-4 bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-4"
+      >
+        <div class="flex items-center justify-between">
+
+          <!-- Informations -->
+          <p class="text-sm text-gray-500">
+            {{ produitsFiltres.length }}
+            résultat{{ produitsFiltres.length > 1 ? 's' : '' }}
+          </p>
+
+          <!-- Navigation -->
+          <div class="flex items-center gap-2">
+
+            <!-- Précédent -->
+            <button
+                    type="button"
+                    (click)="changerPage(pageActuelle - 1)"
+                    [disabled]="pageActuelle === 1"
+                    class="w-9 h-9 rounded-lg border border-gray-200
+               bg-white text-gray-500
+               flex items-center justify-center
+               hover:bg-blue-50 hover:text-blue-600
+               disabled:opacity-40
+               disabled:cursor-not-allowed
+               transition"
+            >
+              <i class="ri-arrow-left-s-line"></i>
+            </button>
+
+            <!-- Page actuelle -->
+            <button
+                    type="button"
+                    class="w-9 h-9 rounded-lg bg-blue-600 text-white
+               flex items-center justify-center
+               font-medium shadow-sm"
+            >
+              {{ pageActuelle }}
+            </button>
+
+            <!-- Suivant -->
+            <button
+                    type="button"
+                    (click)="changerPage(pageActuelle + 1)"
+                    [disabled]="pageActuelle === nombrePages"
+                    class="w-9 h-9 rounded-lg border border-gray-200
+               bg-white text-gray-500
+               flex items-center justify-center
+               hover:bg-blue-50 hover:text-blue-600
+               disabled:opacity-40
+               disabled:cursor-not-allowed
+               transition"
+            >
+              <i class="ri-arrow-right-s-line"></i>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+
     </div>
   </div>
 
@@ -295,16 +444,6 @@
     </div>
   </div>
 
-  <!-- Bouton Ajouter -->
-  <div class="flex justify-end mt-8">
-    <button
-            class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 shadow-md"
-            (click)="ouvrirFormulaireAjout()"
-    >
-      <i class="ri-add-line text-lg"></i>
-      Ajouter un produit
-    </button>
-  </div>
 
 </div>
 
