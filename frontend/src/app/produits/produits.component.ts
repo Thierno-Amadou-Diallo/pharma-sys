@@ -180,6 +180,31 @@ export class ProduitsComponent implements OnInit {
     this.produitsFiltres = [...this.produits];
   }
 
+  supprimerFiltre(type: string): void {
+
+    switch (type) {
+
+      case 'recherche':
+        this.rechercheProduit = '';
+        break;
+
+      case 'statut':
+        this.filtreStatut = 'Tous';
+        break;
+
+      case 'stock':
+        this.filtreStock = 'Tous';
+        break;
+
+      case 'expiration':
+        this.filtreExpiration = 'Tous';
+        break;
+    }
+
+    this.pageActuelle = 1;
+    this.filtrerProduits();
+  }
+
   get currentStatut() {
     const quantite = this.formulaireProduit.get('quantite')?.value || 0;
     if (quantite === 0) {
